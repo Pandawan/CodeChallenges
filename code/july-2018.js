@@ -1,5 +1,5 @@
 /* July 2018 challenge */
-
+/* Tested in node v8.11.1 */
 
 // Throw an invalid argument error
 function errorInvalid(match, argument, type) {
