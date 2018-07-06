@@ -1,0 +1,41 @@
+printf is a function that originated in C. It is used for *print*ing *f*ormated output to stdout. printf takes any positive integer number of arguments. The first argument is a format specifier, which will be described below. All following arguments are the values use to evaluate the format specifiers.
+
+*Format specifier*
+The format specifier is a string of any length. It can contain certain sections that will be replaced by other text. These are denoted using a `%`. The first format section is evaluated using the first argument after the format specifier, the second with the second argument after, and so on.
+
+The following are the format specifiers:
+`%%`: a single `%` sign, the second `%` is said to be escaped.
+`%s`: the literal string passed in.
+`%d`: the decimal string version of the integer passed in.
+`%x`: the lowercase hex version of the integer passed in. (`0x1a2b` or `-0x1a2b`)
+`%X`: the uppercase hex version of the integer passed in. (`0x1A2B` or `-0x1A2B`)
+`%f`: the decimal value of the floating point passed in.
+`%n`: a literal newline character.
+
+The first letter after a non-escaped `%` terminates the format sequence.
+A format sequence with a different letter than one listed above is invalid.
+
+Certain flags may have extra characters between the `%` and the letter. These supersede the specifications above, when present.
+For `%d`, `%f`, `%x`, `%X`:
+- `+`: include a plus sign if positive (incompatible with space and `(`) [for hex: `+0x1234`]
+- <space>: include a space if positive (incompatible with `+` and `(`) [for hex: ` 0x1234`]
+- `0<any positive integer N>`: if value string length (# of digits that contribute to value (not counting leading 0 in hex)) would otherwise be shorter than <N>, pad with 0s on left to make length <N>.
+- `(`: surround negative numbers with parentheses (incompatible with space and `+`) [for hex: `(0x1234)`]
+
+For `%d` only:
+- `,`: include thousand separators (use `,` even if your locale would use otherwise. Use thousands separator specified to your locale)
+
+All other characters between a `%` and its letter are invalid.
+
+All characters not in a format sequence are literal characters.
+
+It is not defined how to handle an invalid format specifier.
+It is not defined how to handle a format specifier requesting more arguments than are given.
+If a format specifier requests fewer arguments than given, silently ignore the extra arguments.
+
+Examples:
+printf("begin %s%d end", "hello", 42) -> "begin hello42 end"
+printf("%03d", 4) -> "004"
+printf("%03d", 1234) -> "1234"
+
+Bonus: gracefully handle invalid strings with nice error messages (be nice to your users :) ). [https://www.xkcd.com/541/]
